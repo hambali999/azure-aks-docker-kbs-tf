@@ -1,0 +1,23 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: iiq-dev-pod
+spec:
+  replicas: #state replicas
+  selector:
+    matchLabels:
+      app: iiq-dev
+  template:
+    metadata:
+      labels:
+        app: iiq-dev
+    spec:
+      hostname: iiq-dev-ui
+      containers:
+        - name: iiq-dev-ui
+          image: igaregistry.azurecr.io/iiq-base-bali-test
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+      imagePullSecrets:
+        - name: iiq-auth

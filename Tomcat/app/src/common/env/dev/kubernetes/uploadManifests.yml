@@ -1,0 +1,21 @@
+jobs:
+  - job:
+    steps:
+      - task: Docker@2
+        displayName: Login to ACR
+        inputs:
+          command: login
+          containerRegistry: "SP Registry"
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: './hambali/app/src/common/env/dev/kubernetes'
+          artifactName: 'manifests'     
+          artifact: deploy-yml
+          artifactType: 'pipeline'
+      
+      - task: Docker@2
+        displayName: Logout to ACR
+        inputs:
+          command: logout
+          containerRegistry: "SP Registry"
